@@ -5,7 +5,7 @@
 #       use of Artificial intelligence.
 #
 #
-
+import random
 # WINNING MOVES
 # 1 = PLAYER, 2 = COMPUTER
 # rows
@@ -53,31 +53,77 @@ def checkboard(targetSum):
     if (board[0] + board[4] + board[8] == targetSum) or (board[2] + board[4] + board[6] == targetSum):
         return 6
 
-def gameLoop(xOrO): # variable is X's or O's
+
+# variable is X's or O's
+def gameLoop(xOrO):
+    # Occupied spots
+    occupiedSpots = [False, False, False, False, False, False, False, False, False]
     # first 3 indices is the top row, second 3 indices is the middle row, third indices is the last row
     if xOrO == "yes":
         print("You are X's")
-        move = input("What is your move?")
+        move = input("What is your move? ")
+        occupiedSpots[int(move)] = True
+        board[int(move)] = 1
+        first = True
     else:
         print("Computer goes first")
         print("You are O's")
-# must make game rules, must make AI
+        offense(occupiedSpots)
+        first = False
+    # must make game rules, must make AI
     while True:
         print("This is the game loop: ")
-        userInput = input("What is your move?")
+        # first check if a winner is among us!
+        if checkIfWinner() == True:
+            break
+        if first == True:
+        # computer goes first within loop
+            defenseVictory()
+            offense(occupiedSpots)
+            userInput = input("What is your move? ")
+            occupiedSpots[int(userInput)] = True
+            board[int(userInput)] = 1;
+        else:
+            # player goes first within the loop
+            userInput = input("What is your move? ")
+            occupiedSpots[int(userInput)] = True
+            board[int(userInput)] = 1;
+            defenseVictory()
+            offense(occupiedSpots)
+        # emergency abort
         if userInput == "quit":
             break
     return
 
 # A.I. Rule 1 - Defense/Victory
 def defenseVictory():
-    print()
+    print("Hit defence/victory function")
+
+
+# A.I. Rule 2 - Offense
+def offense(list):
+    print("Offense is taking place")
+    choice = random.randrange(0, 9)
+    # check to make sure the spot is available
+    while True:
+        if list[choice] == False:
+            list[choice] = True
+            board[choice] = 2
+            break
+        else:
+            choice = random.randrange(0, 9)
+    print(choice)
+
 
 def checkIfWinner():
     if checkboard(3) == 3:
         print("Player wins")
+        return True
     if(checkboard(6) == 6):
         print("Computer Wins")
+        return True
+
+
 def main():
     while True:
         print("Welcome to Tic Tac Toe: AI Edition")
@@ -91,6 +137,7 @@ def main():
             print("Incorrect input, try again")
     return
 
-# Initialize program
+
+# Start Program
 main()
 
