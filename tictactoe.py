@@ -30,18 +30,15 @@ board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 def checkboard(targetSum, oc_board):
     #Check Player
     # rows
-    if ((board[0] + board[1] + board[2] == targetSum) or (board[3] + board[4] + board[5] == targetSum) or (board[6] + board[7] + board[8] == targetSum)) \
-        and ((oc_board[0] == True and oc_board[1] == True and oc_board[2] == True) or (oc_board[3] == True and oc_board[4] == True and oc_board[5] == True) or
+    if ((oc_board[0] == True and oc_board[1] == True and oc_board[2] == True) or (oc_board[3] == True and oc_board[4] == True and oc_board[5] == True) or
         (oc_board[6] == True and oc_board[7] == True and oc_board[8] == True)):
         return 3
     # columns
-    if ((board[0] + board[3] + board[6] == targetSum) or (board[1] + board[4] + board[7] == targetSum) or (board[2] + board[5] + board[8] == targetSum)) \
-         and ((oc_board[0] == True and oc_board[3] == True and oc_board[6] == True) or (oc_board[1] == True and oc_board[4] == True and oc_board[7] == True) or
+    if ((oc_board[0] == True and oc_board[3] == True and oc_board[6] == True) or (oc_board[1] == True and oc_board[4] == True and oc_board[7] == True) or
         (oc_board[2] == True and oc_board[5] == True and oc_board[8] == True)):
         return 3
     #     # diagnals
-    if (board[0] + board[4] + board[8] == targetSum) or (board[2] + board[4] + board[6] == targetSum) \
-         and ((oc_board[0] == True and oc_board[4] == True and oc_board[8] == True) or (oc_board[2] == True and oc_board[4] == True and oc_board[6] == True)):
+    if ((oc_board[0] == True and oc_board[4] == True and oc_board[8] == True) or (oc_board[2] == True and oc_board[4] == True and oc_board[6] == True)):
         return 3
     return 0
     #
@@ -61,7 +58,7 @@ def checkboard(targetSum, oc_board):
 # variable is X's or O's
 def gameLoop(xOrO):
     # Occupied spots
-    occupiedSpots = [False, False, False, False, False, False, False, False, False]
+    occupiedSpots = [0,0,0,0,0,0,0,0,0]
     # first 3 indices is the top row, second 3 indices is the middle row, third indices is the last row
     if xOrO == "yes":
         print("You are X's")
@@ -89,12 +86,12 @@ def gameLoop(xOrO):
             printBoard()
             userInput = input("What is your move? ")
             occupiedSpots[int(userInput)] = True
-            board[int(userInput)] = 1;
+            board[int(userInput)] = 1
         else:
             # player goes first within the loop
             userInput = input("What is your move? ")
             occupiedSpots[int(userInput)] = True
-            board[int(userInput)] = 1;
+            board[int(userInput)] = 1
             printBoard()
             defenseVictory()
             offense(occupiedSpots)
@@ -123,8 +120,8 @@ def offense(list):
     choice = random.randrange(0, 9)
     # check to make sure the spot is available
     while True:
-        if list[choice] == False:
-            list[choice] = True
+        if list[choice] == 0:
+            list[choice] = False
             board[choice] = 2
             break
         else:
