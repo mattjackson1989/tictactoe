@@ -30,29 +30,28 @@ board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 def checkboard(targetSum, oc_board):
     #Check Player
     # rows
-    if ((oc_board[0] == True and oc_board[1] == True and oc_board[2] == True) or (oc_board[3] == True and oc_board[4] == True and oc_board[5] == True) or
-        (oc_board[6] == True and oc_board[7] == True and oc_board[8] == True)):
+    if ((oc_board[0] == 1 and oc_board[1] == 1 and oc_board[2] == 1) or (oc_board[3] == 1 and oc_board[4] == 1 and oc_board[5] == 1) or
+        (oc_board[6] == 1 and oc_board[7] == 1 and oc_board[8] == 1)):
         return 3
     # columns
-    if ((oc_board[0] == True and oc_board[3] == True and oc_board[6] == True) or (oc_board[1] == True and oc_board[4] == True and oc_board[7] == True) or
-        (oc_board[2] == True and oc_board[5] == True and oc_board[8] == True)):
+    if ((oc_board[0] == 1 and oc_board[3] == 1 and oc_board[6] == 1) or (oc_board[1] == 1 and oc_board[4] == 1 and oc_board[7] == 1) or
+        (oc_board[2] == 1 and oc_board[5] == 1 and oc_board[8] == 1)):
         return 3
     #     # diagnals
-    if ((oc_board[0] == True and oc_board[4] == True and oc_board[8] == True) or (oc_board[2] == True and oc_board[4] == True and oc_board[6] == True)):
+    if ((oc_board[0] == 1 and oc_board[4] == 1 and oc_board[8] == 1) or (oc_board[2] == 1 and oc_board[4] == 1 and oc_board[6] == 1)):
         return 3
-    return 0
-    #
-    # # Check Computer
-    # if (board[0] + board[1] + board[2] == targetSum) or (board[3] + board[4] + board[5] == targetSum) or (
-    #         board[6] + board[7] + board[8] == targetSum):
-    #     return 6
-    # # columns
-    # if (board[0] + board[3] + board[6] == targetSum) or (board[1] + board[4] + board[7] == targetSum) or (
-    #                     board[2] + board[5] + board[8] == targetSum):
-    #     return 6
+
+    # Check Computer
+    if ((oc_board[0] == 2 and oc_board[1] == 2 and oc_board[2] == 2) or (oc_board[3] == 2 and oc_board[4] == 2 and oc_board[5] == 2) or
+        (oc_board[6] == 2 and oc_board[7] == 2 and oc_board[8] == 2)):
+        return 6
+    # columns
+    if ((oc_board[0] == 2 and oc_board[3] == 2 and oc_board[6] == 2) or (oc_board[1] == 2 and oc_board[4] == 2 and oc_board[7] == 2) or
+        (oc_board[2] == 2 and oc_board[5] == 2 and oc_board[8] == 2)):
+        return 6
     #     # diagnals
-    # if (board[0] + board[4] + board[8] == targetSum) or (board[2] + board[4] + board[6] == targetSum):
-    #     return 6
+    if ((oc_board[0] == 2 and oc_board[4] == 2 and oc_board[8] == 2) or (oc_board[2] == 2 and oc_board[4] == 2 and oc_board[6] == 2)):
+        return 6
 
 
 # variable is X's or O's
@@ -64,7 +63,7 @@ def gameLoop(xOrO):
         print("You are X's")
         printBoard()
         move = input("What is your move? ")
-        occupiedSpots[int(move)] = True
+        occupiedSpots[int(move)] = 1
         board[int(move)] = 1
         first = True
     else:
@@ -85,12 +84,12 @@ def gameLoop(xOrO):
             offense(occupiedSpots)
             printBoard()
             userInput = input("What is your move? ")
-            occupiedSpots[int(userInput)] = True
+            occupiedSpots[int(userInput)] = 1
             board[int(userInput)] = 1
         else:
             # player goes first within the loop
             userInput = input("What is your move? ")
-            occupiedSpots[int(userInput)] = True
+            occupiedSpots[int(userInput)] = 1
             board[int(userInput)] = 1
             printBoard()
             defenseVictory()
@@ -121,7 +120,7 @@ def offense(list):
     # check to make sure the spot is available
     while True:
         if list[choice] == 0:
-            list[choice] = False
+            list[choice] = 2
             board[choice] = 2
             break
         else:
