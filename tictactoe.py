@@ -32,18 +32,18 @@ board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 def checkboard(oc_board):
     # Check Player
     # rows
-    if ((oc_board[0] == 1 and oc_board[1] == 1 and oc_board[2] == 1) or (
-                oc_board[3] == 1 and oc_board[4] == 1 and oc_board[5] == 1) or
-            (oc_board[6] == 1 and oc_board[7] == 1 and oc_board[8] == 1)):
+    if ((oc_board[0] == 5 and oc_board[1] == 5 and oc_board[2] == 5) or (
+                oc_board[3] == 5 and oc_board[4] == 5 and oc_board[5] == 5) or
+            (oc_board[6] == 5 and oc_board[7] == 5 and oc_board[8] == 5)):
         return 3
     # columns
-    if ((oc_board[0] == 1 and oc_board[3] == 1 and oc_board[6] == 1) or (
-                oc_board[1] == 1 and oc_board[4] == 1 and oc_board[7] == 1) or
-            (oc_board[2] == 1 and oc_board[5] == 1 and oc_board[8] == 1)):
+    if ((oc_board[0] == 5 and oc_board[3] == 5 and oc_board[6] == 5) or (
+                oc_board[1] == 5 and oc_board[4] == 5 and oc_board[7] == 5) or
+            (oc_board[2] == 5 and oc_board[5] == 5 and oc_board[8] == 5)):
         return 3
     # # diagnals
-    if ((oc_board[0] == 1 and oc_board[4] == 1 and oc_board[8] == 1) or (
-                oc_board[2] == 1 and oc_board[4] == 1 and oc_board[6] == 1)):
+    if ((oc_board[0] == 5 and oc_board[4] == 5 and oc_board[8] == 5) or (
+                oc_board[2] == 5 and oc_board[4] == 5 and oc_board[6] == 5)):
         return 3
 
     # Check Computer
@@ -71,8 +71,8 @@ def gameLoop(xOrO):
         print("You are X's")
         printBoard()
         move = input("What is your move? ")
-        occupiedSpots[int(move)] = 1
-        board[int(move)] = 1
+        occupiedSpots[int(move)] = 5
+        board[int(move)] = 5
         first = True
     else:
         print("Computer goes first")
@@ -88,7 +88,7 @@ def gameLoop(xOrO):
             break
         if first:
             # computer goes first within loop
-            defenseVictory()
+            #defenseVictory()
             offense(occupiedSpots)
             printBoard()
             userInput = input("What is your move? ")
@@ -100,7 +100,7 @@ def gameLoop(xOrO):
             occupiedSpots[int(userInput)] = 1
             board[int(userInput)] = 1
             printBoard()
-            defenseVictory()
+            #defenseVictory()
             offense(occupiedSpots)
             printBoard()
         # emergency abort
@@ -119,8 +119,8 @@ def printBoard():
 
 
 # A.I. Rule 1 - Defense/Victory
-def defenseVictory():
-    print("Hit defence/victory function")
+# def defenseVictory():
+    # dkdkd
 
 
 # A.I. Rule 2 - Offense
@@ -130,7 +130,7 @@ def offense(List):
 
 
 def randomMethod(List):
-    choice = random.randrange(0, 8)
+    choice = random.randrange(0, 9)
     # check to make sure the spot is available
     while True:
         if List[choice] == 0:
@@ -138,7 +138,7 @@ def randomMethod(List):
             board[choice] = 2
             break
         else:
-            choice = random.randrange(0, 8)
+            choice = random.randrange(0, 9)
     print(choice)
 
 
@@ -155,6 +155,13 @@ def checkIfWinner(oc_board):
         return True
     if checkboard(oc_board) == 6:
         print("Computer Wins")
+        return True
+    n = 0
+    for x in range(0, 9):
+        if board[x] == 1 or board[x] == 2:
+            n += 1
+    if n == 9:
+        print("Tie Game")
         return True
 
 
