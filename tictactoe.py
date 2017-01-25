@@ -10,9 +10,7 @@
 #       TO RUN: Stand alone .py file. Run as normal for your system with .py files.
 #
 #       BUGS:
-#           1.) When player choose spot 3, the computer can overwrite it, did not see left column
-#               loss was about to happen.
-#           2.) Right column still goes uncheck when player is about to win
+#           INPUT CONTROL STILL NEEDS IMPLEMENTED.
 #
 #####################################################################################################
 
@@ -81,10 +79,10 @@ def gameLoop(xOrO):
     else:
         print("Computer goes first")
         placeMiddle(occupiedSpots)
+        printBoard()
         first = False
     # REAL game loop
     while True:
-        printBoard()
         # first check if a winner is among us!
 
         if first:
@@ -128,18 +126,13 @@ def gameLoop(xOrO):
 # Print board
 def printBoard():
     for x in range(0, 9):
-        print(board[x], end="")
+        print(board[x], end=" ")
         if x == 2 or x == 5:
             print()
     print()
 
 
 # GAME LOGIC SECTION
-# TODO: Work on integrating column logic: MIDDLE -- SOLVED RIGHT -- UNSOLVED
-# problem....how to ensure it will win over losing...therefore, switch defense section and offense section
-# 202
-# 211
-# 101 ==> it will choose to defend over winning here
 
 
 # A.I. Rule 1 - Defense/Victory
@@ -147,6 +140,20 @@ def defenseVictory(oc_board):
     print()
     # FOR ROWS:
     # DEFENSE SECTION
+    # possible left-column loss
+    if(int(oc_board[0]) + int(oc_board[3]) + int(oc_board[6]) == 10):
+        if oc_board[0] == 0:
+            oc_board[0] = 2
+            board[0] = "o"
+            return True
+        if oc_board[3] == 0:
+            oc_board[3] = 2
+            board[3] = "o"
+            return True
+        if oc_board[6] == 0:
+            oc_board[6] = 2
+            board[6] = "o"
+            return True
     # possible middle-column loss
     if(int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10):
         if oc_board[1] == 0:
@@ -161,35 +168,43 @@ def defenseVictory(oc_board):
             oc_board[7] = 2
             board[7] = "o"
             return True
+    # possible right-column loss
+    if (int(oc_board[2]) + int(oc_board[5]) + int(oc_board[8]) == 10):
+        if oc_board[2] == 0:
+            oc_board[2] = 2
+            board[2] = "o"
+            return True
+        if oc_board[5] == 0:
+            oc_board[5] = 2
+            board[5] = "o"
+            return True
+        if oc_board[8] == 0:
+            oc_board[8] = 2
+            board[8] = "o"
+            return True
     # possible top-row loss or possible left-column loss
-    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10 or int(oc_board[0]) + int(oc_board[3]) + int(oc_board[4]) == 10:
+    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10:
+        print("TOP ROW")
         if oc_board[0] == 0:
             oc_board[0] = 2
             board[0] = "o"
             return True
-        if oc_board[1] == 0 and oc_board[3] != 5 and oc_board[6] != 5:
+        if oc_board[1] == 0:
             oc_board[1] = 2
             board[1] = "o"
-            return True
-        if oc_board[3] == 0 and oc_board[1] != 5 and oc_board[2] != 5:
-            oc_board[3] = 2
-            board[3] = "o"
             return True
         if oc_board[2] == 0:
             oc_board[2] = 2
             board[2] = "o"
             return True
-        if oc_board[6] == 0:
-            oc_board[6] = 2
-            board[6] = "o"
-            return True
-    # Possible middle-row loss and middle-column loss
-    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10 or int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10:
-        if oc_board[3] == 0 or oc_board[1] + oc_board[4] + oc_board[7] != 10:
+    # Possible middle-row loss
+    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10:
+        print("Middle row")
+        if oc_board[3] == 0:
             oc_board[3] = 2
             board[3] = "o"
             return True
-        if oc_board[4] == 0 or (oc_board[1] + oc_board[4] + oc_board[7] == 10 and oc_board[4] == 0):
+        if oc_board[4] == 0:
             oc_board[4] = 2
             board[4] = "o"
             return True
