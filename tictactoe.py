@@ -4,7 +4,7 @@
 #       This Tic Tac Toe game demonstrates the
 #       use of Artificial intelligence.
 #
-#
+
 import random
 # WINNING MOVES
 # 1 = PLAYER, 2 = COMPUTER
@@ -115,8 +115,13 @@ def defenseVictory():
 
 # A.I. Rule 2 - Offense
 def offense(list):
+
     print("Offense is taking place")
-    choice = random.randrange(0, 9)
+    randomMethod(list)
+
+
+def randomMethod(list):
+    choice = random.randrange(0, 8)
     # check to make sure the spot is available
     while True:
         if list[choice] == 0:
@@ -124,9 +129,8 @@ def offense(list):
             board[choice] = 2
             break
         else:
-            choice = random.randrange(0, 9)
+            choice = random.randrange(0, 8)
     print(choice)
-
 
 def checkIfWinner(oc_board):
     if checkboard(3, oc_board) == 3:
