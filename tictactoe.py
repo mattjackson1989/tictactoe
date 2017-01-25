@@ -1,31 +1,25 @@
-#       Tic Tac Toe
-#       Mathew Jackson
-#       copyright(c) 2017
-#       This Tic Tac Toe game demonstrates the
-#       use of Artificial intelligence.
+#                                           Tic Tac Toe
+#                                           Mathew Jackson
+#                                           copyright(c) 2017
 #
+#       DESCRIPTION:
+#       This Tic Tac Toe game demonstrates the use of Artificial intelligence.
+#            WINNING MOVES TOTAL: 8
+#           X = PLAYER, O = COMPUTER
+#
+#       TO RUN: Stand alone .py file. Run as normal for your system with .py files.
+#
+#       BUGS:
+#           1.) When player choose spot 3, the computer can overwrite it, did not see left column
+#               loss was about to happen.
+#           2.) Right column still goes uncheck when player is about to win
+#
+#####################################################################################################
 
 import random
 
-# WINNING MOVES
-# 1 = PLAYER, 2 = COMPUTER
-# rows
-# if board[0] + board[1] + board[2] == 3 -> player wins
-# if board[3] + board[4] + board[5] == 3 -> player wins
-# if board[6] + board[7] + board[8] == 3 -> player wins
-# columns
-# if board[0] + board[3] + board[6] == 3 -> player wins
-# if board[1] + board[4] + board[7] == 3 -> player wins
-# if board[2] + board[5] + board[8] == 3 -> player wins
-# diagnal
-# if board[0] + board[4] + board[8] == 3 -> player wins
-# if board[2] + board[4] + board[6] == 3 -> player wins
-
-# Currently:
-# NEED to make a "visual" board to track progress
-
-
-board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+# The game board that will store the visual symbols for output
+board = ["-","-","-","-","-","-","-","-","-"]
 
 
 # check board -- checks sum of target rows -- returns 3 if player wins or is about to win, 6 if computer for computer
@@ -69,20 +63,27 @@ def gameLoop(xOrO):
     occupiedSpots = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     # first 3 indices is the top row, second 3 indices is the middle row, third indices is the last row
     if xOrO == "yes":
-        print("You are X's")
+        print("You are First")
         printBoard()
-        move = input("What is your move? ")
-        occupiedSpots[int(move)] = 5
-        board[int(move)] = 1
-        first = True
+        # User input validation
+        while True:
+            move = input("What is your move? ")
+            if(move.isdigit()):
+                if(int(move) >= 0 and int(move) <= 8):
+                    occupiedSpots[int(move)] = 5
+                    board[int(move)] = "x"
+                    first = True
+                    break
+                else:
+                    print("Input is out of bounds")
+            else:
+                print("Not a digit")
     else:
         print("Computer goes first")
-        print("You are O's")
         placeMiddle(occupiedSpots)
         first = False
-    # must make game rules, must make AI
+    # REAL game loop
     while True:
-        print("press [h] for controls")
         printBoard()
         # first check if a winner is among us!
 
@@ -98,14 +99,14 @@ def gameLoop(xOrO):
             printBoard()
             userInput = input("What is your move? ")
             occupiedSpots[int(userInput)] = 5
-            board[int(userInput)] = 1
+            board[int(userInput)] = "x"
             if checkIfWinner(occupiedSpots):
                 break
         else:
             # player goes first within the loop
             userInput = input("What is your move? ")
             occupiedSpots[int(userInput)] = 5
-            board[int(userInput)] = 1
+            board[int(userInput)] = "x"
             if checkIfWinner(occupiedSpots):
                 break
             printBoard()
@@ -132,53 +133,111 @@ def printBoard():
             print()
     print()
 
-# TODO: Work on integrating column logic
+
+# GAME LOGIC SECTION
+# TODO: Work on integrating column logic: MIDDLE -- SOLVED RIGHT -- UNSOLVED
+# problem....how to ensure it will win over losing...therefore, switch defense section and offense section
+# 202
+# 211
+# 101 ==> it will choose to defend over winning here
+
+
 # A.I. Rule 1 - Defense/Victory
 def defenseVictory(oc_board):
     print()
     # FOR ROWS:
     # DEFENSE SECTION
-    # possible top-row loss
-    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10:
-        if oc_board[0] == 0:
-            oc_board[0] = 2
-            board[0] = 2
-            return True
+    # possible middle-column loss
+    if(int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10):
         if oc_board[1] == 0:
             oc_board[1] = 2
-            board[1] = 2
+            board[1] = "o"
+            return True
+        if oc_board[4] == 0:
+            oc_board[4] = 2
+            board[4] = "o"
+            return True
+        if oc_board[7] == 0:
+            oc_board[7] = 2
+            board[7] = "o"
+            return True
+    # possible top-row loss or possible left-column loss
+    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10 or int(oc_board[0]) + int(oc_board[3]) + int(oc_board[4]) == 10:
+        if oc_board[0] == 0:
+            oc_board[0] = 2
+            board[0] = "o"
+            return True
+        if oc_board[1] == 0 and oc_board[3] != 5 and oc_board[6] != 5:
+            oc_board[1] = 2
+            board[1] = "o"
+            return True
+        if oc_board[3] == 0 and oc_board[1] != 5 and oc_board[2] != 5:
+            oc_board[3] = 2
+            board[3] = "o"
             return True
         if oc_board[2] == 0:
             oc_board[2] = 2
-            board[2] = 2
+            board[2] = "o"
             return True
-    # Possible middle-row loss
-    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10:
-        if oc_board[3] == 0:
+        if oc_board[6] == 0:
+            oc_board[6] = 2
+            board[6] = "o"
+            return True
+    # Possible middle-row loss and middle-column loss
+    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10 or int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10:
+        if oc_board[3] == 0 or oc_board[1] + oc_board[4] + oc_board[7] != 10:
             oc_board[3] = 2
-            board[3] = 2
+            board[3] = "o"
             return True
-        if oc_board[4] == 0:
+        if oc_board[4] == 0 or (oc_board[1] + oc_board[4] + oc_board[7] == 10 and oc_board[4] == 0):
             oc_board[4] = 2
-            board[4] = 2
+            board[4] = "o"
             return True
         if oc_board[5] == 0:
             oc_board[5] = 2
-            board[5] = 2
+            board[5] = "o"
             return True
     # Possible bottom-row loss
-    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10:
+    if int(oc_board[6]) + int(oc_board[7]) + int(oc_board[8]) == 10:
         if oc_board[3] == 0:
             oc_board[3] = 2
-            board[3] = 2
+            board[3] = "o"
             return True
         if oc_board[4] == 0:
             oc_board[4] = 2
-            board[4] = 2
+            board[4] = "o"
             return True
         if oc_board[5] == 0:
             oc_board[5] = 2
-            board[5] = 2
+            board[5] = "o"
+            return True
+    # Possible diagnal loss: ascend
+    if int(oc_board[6]) + int(oc_board[4]) + int(oc_board[2]) == 10:
+        if oc_board[6] == 0:
+            oc_board[6] = 2
+            board[6] = "o"
+            return True
+        if oc_board[4] == 0:
+            oc_board[4] = 2
+            board[4] = "o"
+            return True
+        if oc_board[2] == 0:
+            oc_board[2] = 2
+            board[2] = "o"
+            return True
+    # Possible diagnal loss: descend
+    if int(oc_board[0]) + int(oc_board[4]) + int(oc_board[8]) == 10:
+        if oc_board[0] == 0:
+            oc_board[0] = 2
+            board[0] = "o"
+            return True
+        if oc_board[4] == 0:
+            oc_board[4] = 2
+            board[4] = "o"
+            return True
+        if oc_board[8] == 0:
+            oc_board[8] = 2
+            board[8] = "o"
             return True
     # VICTORY SECTION
     # possible top-row Victory
@@ -186,91 +245,92 @@ def defenseVictory(oc_board):
             oc_board[2]) == 2:
         if oc_board[0] == 0:
             oc_board[0] = 2
-            board[0] = 2
+            board[0] = "o"
             return True
         if oc_board[1] == 0:
             oc_board[1] = 2
-            board[1] = 2
+            board[1] = "o"
             return True
         if oc_board[2] == 0:
             oc_board[2] = 2
-            board[2] = 2
+            board[2] = "o"
             return True
     # Possible middle-row Victory
     if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 4 or int(oc_board[3]) + int(oc_board[4]) + int(
             oc_board[5]) == 2:
         if oc_board[3] == 0:
             oc_board[3] = 2
-            board[3] = 2
+            board[3] = "o"
             return True
         if oc_board[4] == 0:
             oc_board[4] = 2
-            board[4] = 2
+            board[4] = "o"
             return True
         if oc_board[5] == 0:
             oc_board[5] = 2
-            board[5] = 2
+            board[5] = "o"
             return True
     # Possible bottom-row Victory
     if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 4 or int(oc_board[3]) + int(oc_board[4]) + int(
             oc_board[5]) == 2:
         if oc_board[3] == 0:
             oc_board[3] = 2
-            board[3] = 2
+            board[3] = "o"
             return True
         if oc_board[4] == 0:
             oc_board[4] = 2
-            board[4] = 2
+            board[4] = "o"
             return True
         if oc_board[5] == 0:
             oc_board[5] = 2
-            board[5] = 2
+            board[5] = "o"
             return True
-
     if int(oc_board[6]) + int(oc_board[7]) + int(oc_board[8]) == 4 or int(oc_board[6]) + int(oc_board[7]) + int(
             oc_board[8]) == 2:
         if oc_board[6] == 0:
             oc_board[6] = 2
-            board[6] = 2
+            board[6] = "o"
             # 6
             return True
         if oc_board[7] == 0:
             oc_board[7] = 2
-            board[7] = 2
+            board[7] = "o"
             return True
         if oc_board[8] == 0:
             oc_board[8] = 2
-            board[8] = 2
+            board[8] = "o"
             return True
 
 
 
-# A.I. Rule 2 - Offense
+# A.I. Rule 2 - Offense - useful when no rules apply
 def offense(List):
     print("Offense is taking place")
     randomMethod(List)
 
-
+# choose a random location on the board that is not occupied
 def randomMethod(List):
     choice = random.randrange(0, 9)
     # check to make sure the spot is available
     while True:
         if List[choice] == 0:
             List[choice] = 2
-            board[choice] = 2
+            board[choice] = "o"
             break
         else:
             choice = random.randrange(0, 9)
     print(choice)
 
-
+# definitive best move, cancels 4 possible victory paths for opponent, use if PC goes first
 def placeMiddle(List):
-    if board[4] == 0:
-        board[4] = 2
+    if board[4] == "-":
+        board[4] = "o"
         List[4] = 2
         print("Placed in Center")
 
+# END GAME LOGIC
 
+# Traverse list of rules to see if there is a winner
 def checkIfWinner(oc_board):
     if checkboard(oc_board) == 3:
         printBoard()
@@ -282,14 +342,14 @@ def checkIfWinner(oc_board):
         return True
     n = 0
     for x in range(0, 9):
-        if board[x] == 1 or board[x] == 2:
+        if board[x] == "x" or board[x] == "o":
             n += 1
     if n == 9:
         printBoard()
         print("Tie Game")
         return True
 
-
+# Welcome screen and decision to go first or not
 def main():
     while True:
         print("Welcome to Tic Tac Toe: AI Edition")
