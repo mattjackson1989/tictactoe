@@ -10,7 +10,7 @@
 #       TO RUN: Stand alone .py file. Run as normal for your system with .py files.
 #
 #       BUGS:
-#           INPUT CONTROL STILL NEEDS IMPLEMENTED. -- NEEDS to check if victory is first before defense
+#           INPUT CONTROL STILL NEEDS IMPLEMENTED.
 #
 #####################################################################################################
 
