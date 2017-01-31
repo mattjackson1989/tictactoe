@@ -10,7 +10,7 @@
 #       TO RUN: Stand alone .py file. Run as normal for your system with .py files.
 #
 #       BUGS:
-#           INPUT CONTROL STILL NEEDS IMPLEMENTED.
+#           INPUT CONTROL STILL NEEDS IMPLEMENTED. -- NEEDS to check if victory is first before defense
 #
 #####################################################################################################
 
@@ -139,9 +139,9 @@ def printBoard():
 def defenseVictory(oc_board):
     print()
     # FOR ROWS:
-    # DEFENSE SECTION
+    # DEFENSE SECTION --  NEED to implement VICTORY first
     # possible left-column loss
-    if(int(oc_board[0]) + int(oc_board[3]) + int(oc_board[6]) == 10):
+    if(int(oc_board[0]) + int(oc_board[3]) + int(oc_board[6]) == 10 or int(oc_board[0]) + int(oc_board[3]) + int(oc_board[6]) == 4):
         if oc_board[0] == 0:
             oc_board[0] = 2
             board[0] = "o"
@@ -155,7 +155,7 @@ def defenseVictory(oc_board):
             board[6] = "o"
             return True
     # possible middle-column loss
-    if(int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10):
+    if(int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 10 or int(oc_board[1]) + int(oc_board[4]) + int(oc_board[7]) == 4):
         if oc_board[1] == 0:
             oc_board[1] = 2
             board[1] = "o"
@@ -169,7 +169,7 @@ def defenseVictory(oc_board):
             board[7] = "o"
             return True
     # possible right-column loss
-    if (int(oc_board[2]) + int(oc_board[5]) + int(oc_board[8]) == 10):
+    if (int(oc_board[2]) + int(oc_board[5]) + int(oc_board[8]) == 10 or int(oc_board[2]) + int(oc_board[5]) + int(oc_board[8]) == 4):
         if oc_board[2] == 0:
             oc_board[2] = 2
             board[2] = "o"
@@ -183,7 +183,7 @@ def defenseVictory(oc_board):
             board[8] = "o"
             return True
     # possible top-row loss or possible left-column loss
-    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10:
+    if int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 10 or int(oc_board[0]) + int(oc_board[1]) + int(oc_board[2]) == 4:
         print("TOP ROW")
         if oc_board[0] == 0:
             oc_board[0] = 2
@@ -198,7 +198,7 @@ def defenseVictory(oc_board):
             board[2] = "o"
             return True
     # Possible middle-row loss
-    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10:
+    if int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 10 or int(oc_board[3]) + int(oc_board[4]) + int(oc_board[5]) == 4:
         print("Middle row")
         if oc_board[3] == 0:
             oc_board[3] = 2
@@ -213,7 +213,7 @@ def defenseVictory(oc_board):
             board[5] = "o"
             return True
     # Possible bottom-row loss
-    if int(oc_board[6]) + int(oc_board[7]) + int(oc_board[8]) == 10:
+    if int(oc_board[6]) + int(oc_board[7]) + int(oc_board[8]) == 10 or int(oc_board[6]) + int(oc_board[7]) + int(oc_board[8]) == 4:
         if oc_board[3] == 0:
             oc_board[3] = 2
             board[3] = "o"
@@ -227,7 +227,7 @@ def defenseVictory(oc_board):
             board[5] = "o"
             return True
     # Possible diagnal loss: ascend
-    if int(oc_board[6]) + int(oc_board[4]) + int(oc_board[2]) == 10:
+    if int(oc_board[6]) + int(oc_board[4]) + int(oc_board[2]) == 10 or int(oc_board[6]) + int(oc_board[4]) + int(oc_board[2]) == 4:
         if oc_board[6] == 0:
             oc_board[6] = 2
             board[6] = "o"
@@ -241,7 +241,7 @@ def defenseVictory(oc_board):
             board[2] = "o"
             return True
     # Possible diagnal loss: descend
-    if int(oc_board[0]) + int(oc_board[4]) + int(oc_board[8]) == 10:
+    if int(oc_board[0]) + int(oc_board[4]) + int(oc_board[8]) == 10 or int(oc_board[0]) + int(oc_board[4]) + int(oc_board[8]) == 4:
         if oc_board[0] == 0:
             oc_board[0] = 2
             board[0] = "o"
