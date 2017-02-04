@@ -20,6 +20,9 @@
 #               <user>$python tictactoe.py
 #       BUGS:
 #           NONE A.T.M B-)
+
+#           INPUT CONTROL STILL NEEDS IMPLEMENTED.
+#
 #####################################################################################################
 # libraries
 import random
