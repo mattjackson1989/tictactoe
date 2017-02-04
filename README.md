@@ -6,8 +6,7 @@ Hard Mode utilizes the AI, while easy mode just utilizes one rule I wrote
 for the AI: Random Selection, or offenseRule2.
 # FEATURES
 Player vs Computer (EASY, HARD)
-Player vs Computer
-(Next iteration)Player vs Computer (4x4 hard mode)
+Player vs Player
 EXIT
 # Controls
 0 - 8 are the positions. The top row is 0 - 2, the middle is 3 - 5, and bottom is 6 - 8. 
